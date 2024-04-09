@@ -1,11 +1,15 @@
+import flowbite from "flowbite-react/tailwind";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    `./src/pages/**/*.{js,jsx,ts,tsx}`,
-    `./src/components/**/*.{js,jsx,ts,tsx}`,
-  ],
-  theme: {
-    extend: {},
+export const content = [
+  `./src/pages/**/*.{js,jsx,ts,tsx}`,
+  `./src/components/**/*.{js,jsx,ts,tsx}`,
+  flowbite.content(),
+];
+export const theme = {
+  extend: {},
+  fontFamily: {
+    sans: ['"Overpass"'],
   },
-  plugins: [],
-}
+};
+export const plugins = [flowbite.plugin()];
