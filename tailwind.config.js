@@ -1,10 +1,7 @@
-import flowbite from "flowbite-react/tailwind";
-
 /** @type {import('tailwindcss').Config} */
 export const content = [
   `./src/pages/**/*.{js,jsx,ts,tsx}`,
   `./src/components/**/*.{js,jsx,ts,tsx}`,
-  flowbite.content(),
 ];
 export const theme = {
   extend: {},
@@ -12,4 +9,4 @@ export const theme = {
     sans: ['"Work Sans"'],
   },
 };
-export const plugins = [flowbite.plugin()];
+export const plugins = [];
