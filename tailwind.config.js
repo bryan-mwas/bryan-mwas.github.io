@@ -9,7 +9,7 @@ export const content = [
 export const theme = {
   extend: {},
   fontFamily: {
-    sans: ['"Overpass"'],
+    sans: ['"Work Sans"'],
   },
 };
 export const plugins = [flowbite.plugin()];

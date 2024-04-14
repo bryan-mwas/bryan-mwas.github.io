@@ -3,20 +3,36 @@ import { HeadFC } from "gatsby";
 
 function About() {
   return (
-    <article className="text-lg font-medium leading-relaxed text-gray-900 dark:text-white">
-      <p className="mb-2 text-center">
-        Hello <span className="text-3xl">👋🏾</span>
+    <div className="leading-relaxed text-gray-900 dark:text-white">
+      <div className="mt-16 mb-12">
+        <h1 className="text-4xl font-semibold">Brian Mwathi</h1>
+        <h2 className="text-2xl font-medium">Software Developer</h2>
+        <h2 className="text-xl text-gray-600">Nairobi, Kenya</h2>
+        {/* <p className="text-gray-400">
+          <span>Github</span> <span>X</span>
+        </p> */}
+      </div>
+      <h1 className="font-semibold text-2xl">About</h1>
+      <p className="text-lg">
+        Hey, I’m Mwathi, a full-time software engineer. My current day job
+        entails building a secure web application serving colleagues across 8
+        countries in Africa. I am proficient in following technologies: React,
+        TypeScript, MongoDB, and NestJS Framework. I also have hands-on
+        experience in developing machine learning applications through earning a
+        <a
+          href="https://www.udacity.com/certificate/CFLJGSM9"
+          className="text-blue-500"
+        >
+          {" "}
+          Udacity Scholarship
+        </a>{" "}
+        in AI Programming for Python course. In this program, I got to develop a
+        dog image classifier application. I learned the fundamentals of training
+        a machine-learning model, the mathematical concepts behind deep
+        learning, and deploying a trained model in the real world to make
+        practical applications.
       </p>
-      <p className="mb-2">
-        I’m a software engineer with 5 years of experience, passionate about the
-        web and databases. Throughout my career, I have designed and built web
-        applications in React, TypeScript, MongoDB, and NestJS Framework that
-        have scaled to 8 countries across Africa. I’m a collaborative
-        problem-solver who has worked with cross-functional teams to deliver
-        business solutions.
-      </p>
-      <p className="text-slate-600">More to come...</p>
-    </article>
+    </div>
   );
 }
 export const Head: HeadFC = () => <title>About Page</title>;
