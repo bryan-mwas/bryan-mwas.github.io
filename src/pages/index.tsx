@@ -4,7 +4,7 @@ import About from "./about";
 
 const IndexPage: React.FC<PageProps> = () => {
   return (
-    <main className="container mx-auto w-1/2">
+    <main className="container mx-auto md:w-1/2 p-8">
       <About />
     </main>
   );

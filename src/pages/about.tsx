@@ -3,7 +3,7 @@ import { HeadFC } from "gatsby";
 
 function About() {
   return (
-    <div className="leading-relaxed text-gray-900 dark:text-white">
+    <div className="text-lg md:text-justify leading-relaxed text-gray-900 dark:text-white">
       <div className="mt-16 mb-12">
         <h1 className="text-4xl font-semibold">Brian Mwathi</h1>
         <h2 className="text-2xl font-medium">Software Developer</h2>
@@ -13,15 +13,24 @@ function About() {
         </p> */}
       </div>
       <h1 className="font-semibold text-2xl">About</h1>
-      <p className="text-lg">
+      <p>
         Hey, I’m Mwathi, a full-time software engineer. My current day job
         entails building a secure web application serving colleagues across 8
-        countries in Africa. I am proficient in following technologies: React,
-        TypeScript, MongoDB, and NestJS Framework. I also have hands-on
-        experience in developing machine learning applications through earning a
+        countries in Africa. I am proficient in following technologies:
+      </p>
+      <ul className="list-disc list-inside md:ml-16 my-2">
+        <li>React</li>
+        <li>TypeScript</li>
+        <li>MongoDB</li>
+        <li>NestJS Framework</li>
+      </ul>
+      <p>
+        I also have experience in developing machine learning applications
+        through earning a
         <a
           href="https://www.udacity.com/certificate/CFLJGSM9"
           className="text-blue-500"
+          target="_blank"
         >
           {" "}
           Udacity Scholarship
