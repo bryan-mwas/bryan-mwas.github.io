@@ -42,7 +42,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/BM.jpg",
+        icon: "src/images/BM.svg",
       },
     },
     "gatsby-transformer-remark",
