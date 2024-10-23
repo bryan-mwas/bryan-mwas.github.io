@@ -3,16 +3,12 @@ import type { HeadFC, PageProps } from "gatsby";
 import {
   Code2,
   Globe2,
-  Users,
   Mail,
   Github,
   Linkedin,
   Code,
   Briefcase,
-  Rocket,
-  Target,
   Laptop,
-  Brain,
   Book,
   ChevronDown,
   ChartPie,
@@ -55,13 +51,24 @@ const IndexPage: React.FC<PageProps> = () => {
             Software Engineer | Problem Solver | Data Analyst
           </p>
           <div className="flex justify-center space-x-4">
-            <a href="#" className="p-2 hover:text-blue-400 transition-colors">
+            <a
+              href="https://github.com/bryan-mwas"
+              target="_blank"
+              className="p-2 hover:text-blue-400 transition-colors"
+            >
               <Github className="w-6 h-6" />
             </a>
-            <a href="#" className="p-2 hover:text-blue-400 transition-colors">
+            <a
+              href="https://www.linkedin.com/in/brian-mwathi-wangome-27645b141/"
+              target="_blank"
+              className="p-2 hover:text-blue-400 transition-colors"
+            >
               <Linkedin className="w-6 h-6" />
             </a>
-            <a href="#" className="p-2 hover:text-blue-400 transition-colors">
+            <a
+              href="mailto:mwathibrian7@gmail.com"
+              className="p-2 hover:text-blue-400 transition-colors"
+            >
               <Mail className="w-6 h-6" />
             </a>
           </div>
@@ -84,9 +91,9 @@ const IndexPage: React.FC<PageProps> = () => {
           <p className="text-lg text-slate-300 leading-relaxed">
             🚀 Hey there! I'm a passionate Software Engineer who transforms
             complex problems into elegant solutions that scale. When I'm not
-            crafting code, you'll find me exploring new technologies or
-            mentoring the next generation of developers. With 5 years in the
-            tech trenches, I've had the privilege of:
+            crafting code, you'll find me exploring new technologies or playing
+            video games. With over 5 years in the tech trenches, I've had the
+            privilege of:
           </p>
 
           {/* Achievement Grid */}
@@ -158,21 +165,44 @@ const IndexPage: React.FC<PageProps> = () => {
         <section className="space-y-8">
           <h2 className="text-3xl font-bold">Recent Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-slate-800/50 p-6 rounded-lg space-y-4">
+            <div className="bg-slate-800/50 hover:bg-slate-700/50 p-6 rounded-lg space-y-4">
               <h3 className="text-xl font-semibold flex items-center">
                 <Banknote className="w-6 h-6 text-blue-400 mr-2" />
-                Mpesa PDF Statement Analyzer
-              </h3>
-              <p className="text-slate-300"></p>
-            </div>
-            <div className="bg-slate-800/50 p-6 rounded-lg space-y-4">
-              <h3 className="text-xl font-semibold flex items-center">
-                <ChartPie className="w-6 h-6 text-blue-400 mr-2" />
-                Quote Generator
+                <a
+                  href="https://github.com/bryan-mwas/transactions-analyzer"
+                  className="hover:underline"
+                  target="_blank"
+                >
+                  M-Pesa PDF Statement Analyzer
+                </a>
               </h3>
               <p className="text-slate-300">
-                This is an online PDF Quote Generation for businesses. It allows
-                users to generate PDF with company details included
+                The M-Pesa Statement Transaction Analyzer is an intuitive tool
+                designed to help users gain deep insights into their MPesa
+                transactions by automatically processing and analyzing their
+                MPesa statement data. This tool allows users to upload their
+                MPesa statements in PDF format and instantly breaks down the
+                data into clear, visual summaries.
+              </p>
+            </div>
+            <div className="bg-slate-800/50 hover:bg-slate-700/50 p-6 rounded-lg space-y-4">
+              <h3 className="text-xl font-semibold flex items-center">
+                <ChartPie className="w-6 h-6 text-blue-400 mr-2" />
+                <a
+                  href="https://quote-gen-green.vercel.app/"
+                  className="hover:underline"
+                  target="_blank"
+                >
+                  Quote Generator
+                </a>
+              </h3>
+              <p className="text-slate-300">
+                The Online Invoice Quote Generator is a user-friendly and
+                efficient tool designed to help businesses and freelancers
+                quickly create professional invoices and quotes. Whether you
+                need to send an estimate for a project or bill clients for
+                completed work, this generator streamlines the entire process,
+                ensuring accuracy and customization.
               </p>
             </div>
           </div>
