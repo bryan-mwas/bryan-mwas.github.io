@@ -6,7 +6,7 @@ export const content = [
 export const theme = {
   extend: {},
   fontFamily: {
-    sans: ['"Work Sans"'],
+    sans: ['"Inter"'],
   },
 };
 export const plugins = [];
