@@ -14,7 +14,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-google-gtag",
       options: {
-        trackingIds: ["GA-TRACKING_ID"],
+        trackingIds: ["G-K3HXYVPTVN"],
         // This object gets passed directly to the gtag config command
         // This config will be shared across all trackingIds
         gtagConfig: {
