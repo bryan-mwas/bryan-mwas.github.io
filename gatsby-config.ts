@@ -14,7 +14,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-google-gtag",
       options: {
-        trackingIds: ["G-K3HXYVPTVN"],
+        trackingIds: ["G-K3HXYVPTVN", "GT-P85BCD2Z"],
         // This object gets passed directly to the gtag config command
         // This config will be shared across all trackingIds
         gtagConfig: {
@@ -31,7 +31,7 @@ const config: GatsbyConfig = {
           // Avoids sending pageview hits from custom paths
           exclude: ["/preview/**", "/do-not-track/me/too/"],
           // Defaults to https://www.googletagmanager.com
-          origin: "YOUR_SELF_HOSTED_ORIGIN",
+          origin: "https://www.googletagmanager.com",
           // Delays processing pageview events on route update (in milliseconds)
           delayOnRouteUpdate: 0,
         },
