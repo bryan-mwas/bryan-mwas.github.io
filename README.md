@@ -60,3 +60,9 @@ Notes:
 
 - For repos named `<user>.github.io` or `<org>.github.io`, the site is served at the root domain and no base path is used.
 - For other repos (project pages), the site is served at `/<repoName>/`. The build workflow auto-sets the correct `basePath` and `assetPrefix`.
+
+## Editing About page content (Markdown)
+
+- Update your About content in `src/content/about.md`. It supports standard Markdown.
+- For links/images in Markdown:
+  - Prefer relative URLs like `images/photo.jpg` (not `/images/photo.jpg`) so they work under GitHub Pages subpaths.

@@ -1,31 +1,41 @@
 import type { Metadata } from "next";
+import fs from "node:fs/promises";
+import path from "node:path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
 
-export const metadata: Metadata = {
-  title: "About Me | My Portfolio",
-  description: "Learn more about me, my background, and what I do.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutPath = path.join(process.cwd(), "src", "content", "about.md");
+  const file = await fs.readFile(aboutPath, "utf8");
+  const { data } = matter(file);
+  const title = typeof data.title === "string" ? data.title : "About Me";
+  const description =
+    typeof data.description === "string"
+      ? data.description
+      : "Learn more about me, my background, and what I do.";
+  return {
+    title: `${title} | My Portfolio`,
+    description,
+  };
+}
 
-export default function AboutPage() {
+async function getAboutHtml(): Promise<string> {
+  const aboutPath = path.join(process.cwd(), "src", "content", "about.md");
+  const file = await fs.readFile(aboutPath, "utf8");
+  const { content } = matter(file);
+  const processed = await remark().use(html).process(content);
+  return processed.toString();
+}
+
+export default async function AboutPage() {
+  const contentHtml = await getAboutHtml();
   return (
     <main className="max-w-5xl mx-auto px-6 sm:px-8 py-10 sm:py-14">
-      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
-        About Me
-      </h1>
-      <p className="text-base leading-7 text-foreground/90 mb-4">
-        Hi, I’m a software developer who enjoys building clean, fast, and
-        accessible web applications. I focus on modern JavaScript/TypeScript,
-        React, and Next.js, and I care deeply about great DX and UX.
-      </p>
-      <p className="text-base leading-7 text-foreground/90 mb-4">
-        Over the years I’ve worked across the stack: from designing APIs and
-        databases to crafting pixel-perfect, responsive interfaces. I love
-        solving real problems, improving performance, and shipping features that
-        users actually enjoy.
-      </p>
-      <p className="text-base leading-7 text-foreground/90">
-        When I’m not coding, you’ll find me learning new tools, contributing to
-        open source, and writing about what I discover.
-      </p>
+      <article
+        className="prose prose-invert max-w-none"
+        dangerouslySetInnerHTML={{ __html: contentHtml }}
+      />
     </main>
   );
 }
