@@ -23,10 +23,17 @@ const projects: Project[] = [
     href: "https://github.com/bryan-mwas/transactions-analyzer",
     imageSrc: "/images/mpesa.png",
   },
+  {
+    title: "Loan Calculator",
+    description:
+      "A loan amortization calculator that allows one to visualize scenarios when based on their monthly payments",
+    href: "/loan-calculator",
+    imageSrc: "/images/mpesa.png",
+  },
 ];
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Portfolio | Brian Mwathi",
   description: "Selected projects and work I’m proud of.",
 };
 

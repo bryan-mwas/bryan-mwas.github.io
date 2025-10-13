@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ? data.description
       : "Learn more about me, my background, and what I do.";
   return {
-    title: `${title} | My Portfolio`,
+    title: `${title} | Brian Mwathi`,
     description,
   };
 }
