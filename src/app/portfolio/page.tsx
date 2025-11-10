@@ -28,7 +28,7 @@ const projects: Project[] = [
     description:
       "A loan amortization calculator that allows one to visualize scenarios when based on their monthly payments",
     href: "/loan-calculator",
-    imageSrc: "/images/mpesa.png",
+    imageSrc: "/images/budget.png",
   },
 ];
 
