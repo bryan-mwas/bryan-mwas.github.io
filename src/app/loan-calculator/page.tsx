@@ -112,7 +112,7 @@ function App() {
                 name="customInstallment"
                 onChange={(e) =>
                   setCustomInstallments(
-                    e.target.value === "" ? undefined : +e.target.value
+                    e.target.value === "" ? undefined : +e.target.value,
                   )
                 }
                 placeholder="Custom monthly EMI (optional)"
@@ -159,7 +159,8 @@ function App() {
                         </h2>
                         <div className="text-sm text-gray-600">
                           Months taken: {s.months_taken} · Total interest:{" "}
-                          {formatCurrency(s.total_interest)}
+                          {formatCurrency(s.total_interest)}. Completion date:{" "}
+                          {s.getCompletionDate()}
                         </div>
                       </div>
 
@@ -174,7 +175,7 @@ function App() {
                             // prevent the click from toggling the accordion
                             e.stopPropagation();
                             setScenarios((prev) =>
-                              prev.filter((_, i) => i !== idx)
+                              prev.filter((_, i) => i !== idx),
                             );
                           }}
                           className="text-sm text-red-600 bg-red-50 px-2 py-1 rounded hover:bg-red-100"

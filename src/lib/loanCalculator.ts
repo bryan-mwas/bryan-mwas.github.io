@@ -26,7 +26,7 @@ export class LoanAmortizationSchedule {
     const num = this.principal * this.r * Math.pow(1 + this.r, this.numPeriods);
     const denom = Math.pow(1 + this.r, this.numPeriods) - 1;
 
-    return parseFloat((num / denom).toFixed(2));
+    return num / denom;
   }
 
   getArmotizationSchedule() {
@@ -46,10 +46,22 @@ export class LoanAmortizationSchedule {
       const interest = opening_balance * this.r;
       let paid_principal = emi - interest;
 
+      // Validation
+      if (this.principal <= 0)
+        throw new Error("Principal must be greater than 0");
+      if (this.r <= 0) throw new Error("Rate cannot be negative");
+      if (this.numPeriods <= 0) throw new Error("Years must be greater than 0");
+      if (
+        this.customInstallments !== undefined &&
+        this.customInstallments <= 0
+      ) {
+        throw new Error("Custom installment must be greater than 0");
+      }
+
       // check against small input
       if (paid_principal < 0) {
         throw new Error(
-          "The custom monthly installment is too small. Doesn't cover interest"
+          "The custom monthly installment is too small. Doesn't cover interest",
         );
       }
 
@@ -59,9 +71,6 @@ export class LoanAmortizationSchedule {
         console.log("Completion will be at month: ", start_date.toUTCString());
         this.total_interest = total_interest_paid;
         this.months_taken = month;
-        console.log("Total Interest Paid: ", total_interest_paid);
-        console.log(`Time taken: ${this.months_taken} months`);
-        console.log("At the end: ", paid_principal, opening_balance);
         paid_principal = opening_balance;
         emi = interest + paid_principal;
       }
@@ -81,6 +90,18 @@ export class LoanAmortizationSchedule {
       opening_balance = closing_balance;
       month++;
     }
+    this.months_taken = month - 1;
+    this.total_interest = total_interest_paid;
     return table;
+  }
+
+  getCompletionDate() {
+    const start_date = new Date();
+    start_date.setMonth(start_date.getMonth() + this.months_taken);
+    return start_date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
   }
 }
