@@ -19,9 +19,9 @@ export default function PortfolioCatalog({
   };
 
   return (
-    <div>
+    <div className="portfolio-catalog-container">
       <div className="portfolio-view-bar">
-        <div className="hero-spec-tag" style={{ margin: 0 }}>
+        <div className="hero-spec-tag">
           <span className="spec-dot" aria-hidden="true" />
           <span>INDEX // {projects.length} VERIFIED RELEASES</span>
         </div>
@@ -29,7 +29,7 @@ export default function PortfolioCatalog({
         <div
           className="portfolio-view-toggle"
           role="group"
-          aria-label="View format"
+          aria-label="Catalog layout presentation"
         >
           <button
             type="button"
@@ -57,20 +57,34 @@ export default function PortfolioCatalog({
           ))}
         </div>
       ) : (
-        <div className="table-scroll" style={{ borderRadius: "16px" }}>
-          <table className="spec-catalog-table" aria-label="Technical Projects Index">
+        <div
+          tabIndex={0}
+          role="region"
+          aria-labelledby="spec-table-caption"
+          className="spec-table-wrapper"
+        >
+          <table
+            className="spec-catalog-table"
+            aria-label="Technical Projects Specifications"
+          >
+            <caption id="spec-table-caption" className="visually-hidden">
+              Technical Projects Specifications and Verification Index
+            </caption>
             <thead>
               <tr>
-                <th scope="col" style={{ width: "80px" }}>
-                  INDEX
+                <th scope="col" className="col-idx">
+                  INDEX / SPEC ID
                 </th>
-                <th scope="col" style={{ width: "120px" }}>
-                  SPEC CODE
+                <th scope="col" className="col-system">
+                  SYSTEM &amp; SCOPE
                 </th>
-                <th scope="col">SYSTEM &amp; SCOPE</th>
-                <th scope="col">DOMAIN</th>
-                <th scope="col">STACK</th>
-                <th scope="col" style={{ textAlign: "right" }}>
+                <th scope="col" className="col-domain">
+                  DOMAIN
+                </th>
+                <th scope="col" className="col-stack">
+                  STACK
+                </th>
+                <th scope="col" className="col-actions">
                   ACTIONS
                 </th>
               </tr>
@@ -82,63 +96,54 @@ export default function PortfolioCatalog({
                 const isInternalUrl = project.url?.startsWith("/");
 
                 return (
-                  <tr key={project.slug}>
-                    <td style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>
-                      [{indexStr}]
-                    </td>
-                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--green)" }}>
-                      {sysCode}
-                    </td>
-                    <td>
-                      <div style={{ fontWeight: 600, fontSize: "0.95rem" }}>
+                  <tr key={project.slug} className="spec-row">
+                    <th scope="row" className="spec-row-header">
+                      <span className="spec-code-badge">
+                        [{indexStr}] {sysCode}
+                      </span>
+                      <span className="spec-mobile-domain card-status-pill">
+                        {project.category}
+                      </span>
+                    </th>
+
+                    <td className="spec-cell-system">
+                      <div className="spec-title">
                         <Link
                           href={`/portfolio/${project.slug}`}
                           onClick={() => playTactileClick()}
-                          style={{ textDecoration: "none" }}
                         >
                           {project.title}
                         </Link>
                       </div>
-                      <div
-                        style={{
-                          fontSize: "0.82rem",
-                          color: "var(--ink-muted)",
-                          marginTop: "2px",
-                          maxWidth: "360px",
-                        }}
-                      >
-                        {project.summary}
-                      </div>
+                      <p className="spec-desc">{project.summary}</p>
                     </td>
-                    <td>
-                      <span className="card-status-pill">{project.category}</span>
+
+                    <td className="spec-cell-domain">
+                      <span className="card-status-pill">
+                        {project.category}
+                      </span>
                     </td>
-                    <td>
-                      <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", maxWidth: "240px" }}>
-                        {project.stack.slice(0, 3).map((tech) => (
-                          <span
-                            key={tech}
-                            style={{
-                              fontFamily: "var(--font-mono)",
-                              fontSize: "0.72rem",
-                              background: "var(--bg)",
-                              padding: "2px 6px",
-                              borderRadius: "4px",
-                              border: "1px solid var(--border-subtle)",
-                            }}
-                          >
+
+                    <td className="spec-cell-stack">
+                      <ul className="spec-tag-list" aria-label={`Tech stack for ${project.title}`}>
+                        {project.stack.map((tech) => (
+                          <li key={tech} className="spec-tag-item">
+                            <span className="tag-hash" aria-hidden="true">
+                              #
+                            </span>
                             {tech}
-                          </span>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </td>
-                    <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ display: "inline-flex", gap: "6px", alignItems: "center" }}>
+
+                    <td className="spec-cell-actions">
+                      <div className="spec-actions-cluster">
                         <Link
                           href={`/portfolio/${project.slug}`}
                           onClick={() => playTactileClick()}
                           className="btn btn-ghost btn-sm btn-tactile"
-                          style={{ padding: "4px 10px", fontSize: "0.75rem" }}
+                          aria-label={`View full specification dossier for ${project.title}`}
                         >
                           Spec &rarr;
                         </Link>
@@ -148,7 +153,7 @@ export default function PortfolioCatalog({
                               href={project.url}
                               onClick={() => playTactileClick()}
                               className="btn btn-primary btn-sm btn-tactile"
-                              style={{ padding: "4px 10px", fontSize: "0.75rem" }}
+                              aria-label={`Launch ${project.title}`}
                             >
                               Launch ↗
                             </Link>
@@ -159,11 +164,23 @@ export default function PortfolioCatalog({
                               rel="noopener noreferrer"
                               onClick={() => playTactileClick()}
                               className="btn btn-primary btn-sm btn-tactile"
-                              style={{ padding: "4px 10px", fontSize: "0.75rem" }}
+                              aria-label={`Open live demonstration for ${project.title}`}
                             >
                               Demo ↗
                             </a>
                           )
+                        ) : null}
+                        {project.repo ? (
+                          <a
+                            href={project.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => playTactileClick()}
+                            className="btn btn-ghost btn-sm btn-tactile"
+                            aria-label={`Open source code repository for ${project.title}`}
+                          >
+                            Code ↗
+                          </a>
                         ) : null}
                       </div>
                     </td>

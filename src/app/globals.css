@@ -1501,22 +1501,28 @@ a:hover {
   display: inline-flex;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px;
-  gap: 2px;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
 }
 
 .view-mode-btn {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 5px 12px;
+  font-size: 0.78rem;
+  padding: 6px 14px;
   border: none;
   background: transparent;
   color: var(--ink-muted);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
+  letter-spacing: 0.03em;
   transition: all 0.15s ease;
+  min-block-size: var(--target-size);
+  min-inline-size: var(--target-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .view-mode-btn.is-active {
@@ -1527,6 +1533,15 @@ a:hover {
 [data-theme="hifi"] .view-mode-btn.is-active {
   background: var(--green);
   color: #0d1210;
+}
+
+/* Spec Table Container (Modern Web Guidance: responsive-table) */
+.spec-table-wrapper {
+  overflow-x: auto;
+  max-inline-size: 100%;
+  container: spec-catalog / inline-size;
+  border-radius: 16px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .spec-catalog-table {
@@ -1541,7 +1556,9 @@ a:hover {
   font-size: 0.88rem;
 }
 
-.spec-catalog-table th {
+.spec-catalog-table thead th {
+  position: sticky;
+  inset-block-start: 0;
   background: var(--bg);
   padding: 12px 16px;
   font-family: var(--font-mono);
@@ -1550,6 +1567,26 @@ a:hover {
   text-align: left;
   border-bottom: 1px solid var(--border);
   color: var(--ink);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.spec-catalog-table tbody th.spec-row-header {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.spec-code-badge {
+  color: var(--green);
+  letter-spacing: 0.02em;
+}
+
+.spec-mobile-domain {
+  display: none;
 }
 
 .spec-catalog-table td {
@@ -1558,12 +1595,305 @@ a:hover {
   vertical-align: middle;
 }
 
+.spec-catalog-table tr:last-child th,
 .spec-catalog-table tr:last-child td {
   border-bottom: none;
 }
 
-.spec-catalog-table tr:hover td {
+.spec-catalog-table tr:hover td,
+.spec-catalog-table tr:hover th {
   background: var(--table-zebra);
+}
+
+.spec-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.spec-title a {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.spec-title a:hover {
+  color: var(--orange);
+}
+
+.spec-desc {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  margin-top: 2px;
+  margin-bottom: 0;
+  max-width: 360px;
+  line-height: 1.45;
+}
+
+.spec-tag-list {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 240px;
+}
+
+.spec-tag-item {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.spec-actions-cluster {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Stacked Layout for Narrow Containers (Modern Web Guidance: responsive-table) */
+@container spec-catalog (inline-size < 720px) {
+  .spec-catalog-table,
+  .spec-catalog-table thead,
+  .spec-catalog-table tbody,
+  .spec-catalog-table tr,
+  .spec-catalog-table th,
+  .spec-catalog-table td {
+    display: block;
+  }
+
+  .spec-catalog-table thead {
+    display: none;
+  }
+
+  .spec-catalog-table {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .spec-catalog-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .spec-row {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .spec-row:hover {
+    border-color: var(--orange);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .spec-catalog-table tbody th.spec-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+  }
+
+  [data-theme="hifi"] .spec-catalog-table tbody th.spec-row-header {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .spec-mobile-domain {
+    display: inline-flex;
+  }
+
+  .spec-cell-domain {
+    display: none;
+  }
+
+  .spec-cell-system {
+    padding: 16px 16px 10px;
+    border-bottom: none;
+  }
+
+  .spec-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .spec-desc {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    max-width: none;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .spec-cell-stack {
+    padding: 0 16px 16px;
+    border-bottom: none;
+  }
+
+  .spec-tag-list {
+    max-width: none;
+    gap: 6px;
+  }
+
+  .spec-tag-item {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .spec-cell-actions {
+    padding: 12px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: none;
+  }
+
+  .spec-actions-cluster {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .spec-actions-cluster .btn {
+    flex: 1;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Fallback Media Query for browsers or narrow screens */
+@media (max-width: 680px) {
+  .spec-catalog-table,
+  .spec-catalog-table thead,
+  .spec-catalog-table tbody,
+  .spec-catalog-table tr,
+  .spec-catalog-table th,
+  .spec-catalog-table td {
+    display: block;
+  }
+
+  .spec-catalog-table thead {
+    display: none;
+  }
+
+  .spec-catalog-table {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .spec-catalog-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .spec-row {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+  }
+
+  .spec-catalog-table tbody th.spec-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+  }
+
+  [data-theme="hifi"] .spec-catalog-table tbody th.spec-row-header {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .spec-mobile-domain {
+    display: inline-flex;
+  }
+
+  .spec-cell-domain {
+    display: none;
+  }
+
+  .spec-cell-system {
+    padding: 16px 16px 10px;
+    border-bottom: none;
+  }
+
+  .spec-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .spec-desc {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    max-width: none;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .spec-cell-stack {
+    padding: 0 16px 16px;
+    border-bottom: none;
+  }
+
+  .spec-tag-list {
+    max-width: none;
+    gap: 6px;
+  }
+
+  .spec-tag-item {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .spec-cell-actions {
+    padding: 12px 16px;
+    background: var(--bg);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: none;
+  }
+
+  .spec-actions-cluster {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .spec-actions-cluster .btn {
+    flex: 1;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 /* Retro Glitch Terminal Console for 404 */
@@ -1704,5 +2034,26 @@ a:hover {
 
   .footer-keys {
     gap: 8px 10px;
+  }
+
+  .portfolio-view-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .portfolio-view-toggle {
+    display: flex;
+    width: 100%;
+  }
+
+  .view-mode-btn {
+    flex: 1;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
   }
 }
