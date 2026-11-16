@@ -10,45 +10,63 @@ export default async function Home() {
     <main id="main-content" tabIndex={-1}>
       <section className="hero">
         <div>
+          <div className="hero-spec-tag">
+            <span className="spec-dot" aria-hidden="true" />
+            <span>SYS-SPEC: FULL-STACK ENGINEER // CLOUD ARCHITECT</span>
+          </div>
           <h1>
             Hello, I&rsquo;m <span>Brian.</span>
           </h1>
           <p>
             A full-stack engineer with six years of experience building
-            enterprise-scale web apps on AWS and Azure, and tools that fit how
-            Africa pays and works.
+            enterprise-scale distributed applications on AWS and Azure, and
+            high-trust software that fits how Africa pays and works.
           </p>
           <div className="actions">
-            <Link className="btn btn-primary" href="/portfolio">
-              See my work
+            <Link className="btn btn-primary btn-tactile" href="/portfolio">
+              Explore work &rarr;
             </Link>
-            <a className="btn btn-ghost" href="mailto:mwathibrian7@gmail.com">
+            <a
+              className="btn btn-ghost btn-tactile"
+              href="mailto:mwathibrian7@gmail.com"
+            >
               Say hello
             </a>
           </div>
         </div>
-        <div className="hero-photo">
-          <Image
-            src="/images/profile.png"
-            alt="Brian Mwathi"
-            width={280}
-            height={320}
-            priority
-            sizes="(max-width: 640px) 200px, 280px"
-          />
+
+        <div className="hero-photo-wrap">
+          <div className="hero-photo">
+            <Image
+              src="/images/profile.png"
+              alt="Brian Mwathi portrait"
+              width={280}
+              height={320}
+              priority
+              sizes="(max-width: 640px) 200px, 280px"
+            />
+          </div>
+          <div className="photo-spec-caption">
+            <span>FIGURE 01: MWATHI, B.</span>
+            <span>NBO // 2026</span>
+          </div>
         </div>
       </section>
 
-      <section aria-label="Selected projects" className="projects-section">
+      <section aria-label="Selected engineering projects" className="projects-section">
         <div className="section-head">
-          <h2>Selected Work</h2>
+          <div>
+            <span className="section-subhead">INDEX // SELECTED DEPLOYMENTS</span>
+            <h2>Featured Projects</h2>
+          </div>
           <Link href="/portfolio" className="section-link">
-            View all projects &rarr;
+            Full Index [01-03] &rarr;
           </Link>
         </div>
+
         <div className="projects">
-          {featured.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
+          {featured.map((p, idx) => (
+            <ProjectCard key={p.slug} project={p} index={idx} />
           ))}
         </div>
       </section>

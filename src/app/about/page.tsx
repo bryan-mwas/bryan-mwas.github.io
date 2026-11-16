@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About | Brian Mwathi",
   description:
-    "Learn more about Brian Mwathi, full-stack software engineer specializing in cloud-native architectures and African fintech.",
+    "System profile and background of Brian Mwathi, full-stack engineer and cloud architect based in Nairobi, Kenya.",
 };
 
 export default function AboutPage() {
@@ -12,142 +12,177 @@ export default function AboutPage() {
     <main id="main-content" tabIndex={-1}>
       <div className="page-header">
         <Link href="/" className="back-link">
-          &larr; Back to Home
+          &larr; [00] Back to Base
         </Link>
-        <h1 className="page-title">About Me</h1>
+        <div className="hero-spec-tag">
+          <span className="spec-dot" aria-hidden="true" />
+          <span>DOSSIER // SPECIFICATION ID: BM-2026</span>
+        </div>
+        <h1 className="page-title">About &amp; Background</h1>
         <p className="page-subtitle">
-          Software engineer based in Nairobi, Kenya, architecting cloud-native
-          applications and tools that power business across Africa.
+          Full-stack software engineer based in Nairobi, Kenya, architecting
+          distributed cloud systems and high-reliability financial tooling.
         </p>
       </div>
 
-      <section className="stats-grid" aria-label="Key statistics">
+      <section className="stats-grid" aria-label="System statistics">
         <div className="stat-card">
+          <span className="stat-index">[SPEC-01]</span>
           <span className="stat-num">6+</span>
-          <span className="stat-label">Years of Experience</span>
+          <span className="stat-label">Years Field Experience</span>
           <p className="stat-desc">
-            Designing and shipping enterprise systems on AWS and Azure.
+            Designing resilient microservices and distributed workloads on AWS
+            &amp; Azure.
           </p>
         </div>
 
         <div className="stat-card">
+          <span className="stat-index">[SPEC-02]</span>
           <span className="stat-num">8</span>
-          <span className="stat-label">African Countries</span>
+          <span className="stat-label">African Territories</span>
           <p className="stat-desc">
-            Building applications that serve users in diverse emerging economies.
+            Deploying applications serving millions across diverse African
+            digital economies.
           </p>
         </div>
 
         <div className="stat-card">
+          <span className="stat-index">[SPEC-03]</span>
           <span className="stat-num">MSc</span>
           <span className="stat-label">IT &amp; Machine Learning</span>
           <p className="stat-desc">
-            Master&apos;s degree combining intelligent algorithms and distributed systems.
+            Advanced degree fusing distributed architectures with data science
+            and ML models.
           </p>
         </div>
 
         <div className="stat-card">
-          <span className="stat-num">Fintech</span>
-          <span className="stat-label">Payments &amp; Tools</span>
+          <span className="stat-index">[SPEC-04]</span>
+          <span className="stat-num">FinTech</span>
+          <span className="stat-label">Core Payments</span>
           <p className="stat-desc">
-            Deep experience with M-Pesa statements, billing engines, and loans.
+            Client-side statement decryption, automated billing pipelines, and
+            debt simulators.
           </p>
         </div>
       </section>
 
       <div className="about-columns">
         <article className="bio-card">
+          <div className="card-hardware-header">
+            <span className="card-spec-code">LOG // 01: ENGINEERING NARRATIVE</span>
+            <span className="card-status-pill">VERIFIED</span>
+          </div>
+
           <h2>Background &amp; Philosophy</h2>
           <p>
             Hello! I&apos;m Brian, a software engineer based in Nairobi, Kenya. My
-            journey in technology has been driven by an obsession with solving
-            real-world problems and creating software that runs reliably at scale.
+            approach to software engineering is rooted in first-principles
+            problem solving and building systems that perform flawlessly under
+            real-world constraints.
           </p>
           <p>
-            With a Master&apos;s degree in Information Technology focusing on
-            Machine Learning and an academic foundation in Informatics, I bring a
-            methodical, forward-thinking approach to every project. Over the past
-            six years, I have immersed myself in cloud-native development,
-            architecting distributed systems and microservices that deliver high
-            availability and seamless user experiences across eight African
-            nations.
-          </p>
-
-          <h2>African Tech &amp; Fintech</h2>
-          <p>
-            Building software for Africa requires solving unique infrastructure
-            and payment challenges. Whether it is parsing encrypted M-Pesa PDF
-            statements in the browser, automating itemized invoicing, or
-            visualizing loan amortization models, I prioritize building tools that
-            respect user privacy, work with low latency, and fit the realities of
-            how businesses and consumers transact.
+            With an MSc in Information Technology focused on applied Machine
+            Learning and an undergraduate foundation in Informatics, I combine
+            rigorous technical execution with pragmatic architecture. Over the
+            past six years, I have engineered cloud-native distributed platforms
+            running on AWS and Azure that power transactions across eight
+            African countries.
           </p>
 
-          <h2>Mentorship &amp; Collaboration</h2>
+          <div className="card-hardware-header" style={{ marginTop: "32px" }}>
+            <span className="card-spec-code">LOG // 02: INFRASTRUCTURE &amp; FINTECH</span>
+            <span className="card-status-pill">ACTIVE</span>
+          </div>
+
+          <h2>Building for African Scale</h2>
           <p>
-            Beyond shipping code, I believe strong engineering organizations are
-            built on continuous learning and mentorship. Guiding junior
-            engineers, establishing clean code patterns, and writing clear
-            technical documentation are some of the most rewarding aspects of my
-            career.
+            Building for Africa demands deep empathy for infrastructure
+            discrepancies, mobile-first environments, and distinct payment
+            rails. Whether it is parsing encrypted M-Pesa statements directly in
+            the client runtime for total privacy, generating instantaneous
+            invoice PDFs, or building amortization simulators, I build software
+            that respects user data, loads instantaneously, and stays reliable.
+          </p>
+
+          <div className="card-hardware-header" style={{ marginTop: "32px" }}>
+            <span className="card-spec-code">LOG // 03: MENTORSHIP &amp; STANDARDS</span>
+            <span className="card-status-pill">CONTINUOUS</span>
+          </div>
+
+          <h2>Mentorship &amp; Craft</h2>
+          <p>
+            Writing code is only half the job. I take immense pride in
+            establishing maintainable architectural standards, authoring clean
+            specifications, and mentoring developers. Building collaborative,
+            high-trust engineering teams is how durable technology gets built.
           </p>
 
           <div className="actions" style={{ marginTop: "32px" }}>
-            <Link className="btn btn-primary" href="/portfolio">
-              Explore my portfolio
+            <Link className="btn btn-primary btn-tactile" href="/portfolio">
+              Inspect Portfolio &rarr;
             </Link>
-            <a className="btn btn-ghost" href="mailto:mwathibrian7@gmail.com">
-              Get in touch
+            <a
+              className="btn btn-ghost btn-tactile"
+              href="mailto:mwathibrian7@gmail.com"
+            >
+              Contact Brian
             </a>
           </div>
         </article>
 
         <aside>
           <div className="sidebar-box">
-            <h3>Technical Stack</h3>
+            <div className="card-hardware-header">
+              <span className="card-spec-code">SPEC // TOOLKIT</span>
+              <span className="card-status-pill">V.2026</span>
+            </div>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">Cloud &amp; Infrastructure</div>
+              <div className="toolkit-title">[01] CLOUD &amp; DEVOPS</div>
               <ul className="tags">
-                <li>AWS (Lambda, ECS, RDS)</li>
-                <li>Azure</li>
+                <li>AWS Lambda</li>
+                <li>AWS ECS / RDS</li>
+                <li>Microsoft Azure</li>
                 <li>Docker</li>
-                <li>CI/CD</li>
-                <li>Microservices</li>
+                <li>CI/CD Workflows</li>
               </ul>
             </div>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">Frontend &amp; Mobile Web</div>
+              <div className="toolkit-title">[02] LANGUAGES &amp; WEB</div>
               <ul className="tags">
                 <li>TypeScript</li>
-                <li>Next.js</li>
-                <li>React</li>
-                <li>Modern CSS</li>
+                <li>Next.js / React</li>
+                <li>Node.js</li>
+                <li>Python</li>
                 <li>Web Standards</li>
               </ul>
             </div>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">Backend &amp; Data</div>
+              <div className="toolkit-title">[03] DATA &amp; ARCHITECTURE</div>
               <ul className="tags">
-                <li>Node.js</li>
-                <li>Python</li>
                 <li>PostgreSQL</li>
-                <li>REST APIs</li>
-                <li>GraphQL</li>
+                <li>Redis</li>
+                <li>Microservices</li>
+                <li>REST / GraphQL</li>
+                <li>Event Pipelines</li>
               </ul>
             </div>
           </div>
 
           <div className="sidebar-box">
-            <h3>Let&apos;s Connect</h3>
-            <p style={{ margin: "0 0 16px", fontSize: "0.95rem" }}>
-              Have an interesting project, engineering challenge, or
-              architecture discussion? Reach out anytime.
+            <div className="card-hardware-header">
+              <span className="card-spec-code">STATUS // TELEMETRY</span>
+              <span className="card-status-pill">OPEN</span>
+            </div>
+            <p style={{ margin: "14px 0 16px", fontSize: "0.95rem" }}>
+              Currently open for selected architectural consultations, contract
+              engineering, and technical discussions.
             </p>
             <a
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary btn-tactile btn-sm"
               style={{ width: "100%" }}
               href="mailto:mwathibrian7@gmail.com"
             >
