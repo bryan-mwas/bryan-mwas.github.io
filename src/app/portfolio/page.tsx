@@ -1,53 +1,122 @@
 import type { Metadata } from "next";
-import PortfolioGrid from "./PortfolioGrid";
-
-type Project = {
-  title: string;
-  description: string;
-  href?: string;
-  imageSrc?: string;
-};
-
-const projects: Project[] = [
-  {
-    title: "Invoice Generator",
-    description:
-      "A user-friendly and efficient tool built to help businesses and freelancers quickly create professional invoices and quotes, streamlining the billing process and ensuring accuracy.",
-    href: "https://quote-gen-green.vercel.app/",
-    imageSrc: "/images/quote-gen.png",
-  },
-  {
-    title: "Mpesa Analyzer",
-    description:
-      "An intelligent tool that transforms MPesa PDF statements into actionable financial insights. This project showcases my understanding of African payment ecosystems and demonstrates advanced PDF processing techniques.",
-    href: "https://github.com/bryan-mwas/transactions-analyzer",
-    imageSrc: "/images/mpesa.png",
-  },
-  {
-    title: "Loan Calculator",
-    description:
-      "A loan amortization calculator that allows one to visualize scenarios when based on their monthly payments",
-    href: "/loan-calculator",
-    imageSrc: "/images/budget.png",
-  },
-];
+import Link from "next/link";
+import Image from "next/image";
+import { getProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Portfolio | Brian Mwathi",
-  description: "Selected projects and work I’m proud of.",
+  description:
+    "Explore projects, tools, and case studies built by Brian Mwathi — full-stack engineer and cloud architect.",
 };
 
-export default function PortfolioPage() {
-  return (
-    <main className="max-w-5xl mx-auto px-6 sm:px-8 py-10 sm:py-14">
-      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-2">
-        Portfolio
-      </h1>
-      <p className="text-base leading-7 text-foreground/80 mb-8">
-        Here are some of the projects I have worked on
-      </p>
+export default async function PortfolioPage() {
+  const projects = await getProjects();
 
-      <PortfolioGrid projects={projects} />
+  return (
+    <main id="main-content" tabIndex={-1} className="projects-section">
+      <div className="page-header">
+        <Link href="/" className="back-link">
+          &larr; Back to Home
+        </Link>
+        <h1 className="page-title">Portfolio</h1>
+        <p className="page-subtitle">
+          Selected web applications, open-source fintech utilities, and
+          interactive tools built for scale and real-world impact.
+        </p>
+      </div>
+
+      <div className="projects">
+        {projects.map((project) => {
+          const isInternalUrl = project.url?.startsWith("/");
+          return (
+            <article key={project.slug} className="card">
+              {project.image ? (
+                <div className="card-image-wrap">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    width={400}
+                    height={200}
+                    className="card-image"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+              ) : null}
+
+              <div className="card-body">
+                <div className="card-top">
+                  <span className="card-category">{project.category}</span>
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    className="card-arrow"
+                    aria-label={`Read case study for ${project.title}`}
+                  >
+                    &rarr;
+                  </Link>
+                </div>
+
+                <h3>
+                  <Link href={`/portfolio/${project.slug}`}>
+                    {project.title}
+                  </Link>
+                </h3>
+
+                <p>{project.summary}</p>
+
+                <ul className="tags">
+                  {project.stack.map((tech) => (
+                    <li key={tech}>{tech}</li>
+                  ))}
+                </ul>
+
+                <div className="card-actions-row">
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    className="btn btn-ghost btn-sm"
+                    aria-label={`Read case study for ${project.title}`}
+                  >
+                    Case Study &rarr;
+                  </Link>
+
+                  {project.url ? (
+                    isInternalUrl ? (
+                      <Link
+                        href={project.url}
+                        className="btn btn-primary btn-sm"
+                        aria-label={`Launch tool for ${project.title}`}
+                      >
+                        Launch Tool
+                      </Link>
+                    ) : (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-primary btn-sm"
+                        aria-label={`Open live demo for ${project.title}`}
+                      >
+                        Live Demo
+                      </a>
+                    )
+                  ) : null}
+
+                  {project.repo ? (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-ghost btn-sm"
+                      aria-label={`View GitHub repository for ${project.title}`}
+                    >
+                      GitHub
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </main>
   );
 }

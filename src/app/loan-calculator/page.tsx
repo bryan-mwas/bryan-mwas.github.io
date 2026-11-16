@@ -1,5 +1,7 @@
 "use client";
-import { useState, FormEvent } from "react";
+
+import { useState, FormEvent, useId } from "react";
+import Link from "next/link";
 import { LoanAmortizationSchedule } from "@/lib/loanCalculator";
 import {
   Accordion,
@@ -15,248 +17,307 @@ function formatCurrency(n: number) {
   });
 }
 
-function App() {
-  const [principal, setPrincipal] = useState<number>(0);
-  const [rate, setRate] = useState<number>(0);
-  const [years, setYears] = useState<number>(0);
-  const [customInstallments, setCustomInstallments] = useState<
-    number | undefined
-  >(undefined);
+export default function LoanCalculatorPage() {
+  const [principal, setPrincipal] = useState<string>("100000");
+  const [rate, setRate] = useState<string>("10.5");
+  const [years, setYears] = useState<string>("5");
+  const [customInstallments, setCustomInstallments] = useState<string>("");
   const [scenarios, setScenarios] = useState<LoanAmortizationSchedule[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const errorId = useId();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    const scenario = new LoanAmortizationSchedule({
-      principal,
-      rate,
-      years,
-      customInstallment: customInstallments,
-    });
-    setScenarios((s) => [...s, scenario]);
+    setErrorMessage(null);
+
+    const p = parseFloat(principal);
+    const r = parseFloat(rate);
+    const y = parseFloat(years);
+    const c =
+      customInstallments.trim() !== ""
+        ? parseFloat(customInstallments)
+        : undefined;
+
+    if (isNaN(p) || p <= 0) {
+      setErrorMessage("Please enter a valid loan principal greater than 0.");
+      return;
+    }
+    if (isNaN(r) || r <= 0) {
+      setErrorMessage(
+        "Please enter a valid annual interest rate greater than 0.",
+      );
+      return;
+    }
+    if (isNaN(y) || y <= 0) {
+      setErrorMessage("Please enter a valid loan term in years.");
+      return;
+    }
+    if (c !== undefined && (isNaN(c) || c <= 0)) {
+      setErrorMessage("Custom monthly installment must be greater than 0.");
+      return;
+    }
+
+    try {
+      const scenario = new LoanAmortizationSchedule({
+        principal: p,
+        rate: r,
+        years: y,
+        customInstallment: c,
+      });
+
+      // Execute calculation to ensure schedule computes without error
+      scenario.getArmotizationSchedule();
+      setScenarios((prev) => [...prev, scenario]);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage("An unexpected error occurred during calculation.");
+      }
+    }
+  }
+
+  function handleDeleteScenario(indexToRemove: number) {
+    setScenarios((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-semibold mb-4">
-          Loan Repayment Scenarios
-        </h1>
+    <main id="main-content" tabIndex={-1} className="calc-container">
+      <div className="page-header">
+        <Link href="/portfolio" className="back-link">
+          &larr; Back to Portfolio
+        </Link>
+        <h1 className="page-title">Loan Repayment Scenarios</h1>
+        <p className="page-subtitle">
+          Simulate amortization schedules, test custom monthly installments, and
+          visualize how higher contributions accelerate debt payoff dates.
+        </p>
+      </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-4 rounded-lg shadow-sm space-y-3"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label
-                htmlFor="principal"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Principal
+      <div className="calc-card">
+        <form onSubmit={handleSubmit} noValidate>
+          {errorMessage ? (
+            <div id={errorId} className="error-banner" role="alert">
+              <strong>Error:</strong> {errorMessage}
+            </div>
+          ) : null}
+
+          <div className="form-grid">
+            <div className="field-group">
+              <label htmlFor="principal" className="field-label">
+                Loan Principal
               </label>
               <input
                 id="principal"
-                className="border rounded p-2 w-full"
                 name="principal"
-                onChange={(e) => setPrincipal(+e.target.value)}
-                placeholder="Principal (e.g. 100000)"
                 type="number"
+                inputMode="decimal"
+                min="1"
+                step="any"
+                value={principal}
+                onChange={(e) => setPrincipal(e.target.value)}
+                placeholder="e.g. 100000"
+                className="field-input"
+                aria-invalid={errorMessage ? "true" : undefined}
+                aria-describedby={errorMessage ? errorId : undefined}
+                required
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="rate"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Annual interest rate (%)
+            <div className="field-group">
+              <label htmlFor="rate" className="field-label">
+                Annual Interest Rate (%)
               </label>
               <input
                 id="rate"
-                className="border rounded p-2 w-full"
                 name="rate"
-                onChange={(e) => setRate(+e.target.value)}
-                placeholder="Annual rate (%) e.g. 10.5"
                 type="number"
+                inputMode="decimal"
+                min="0.01"
                 step="0.01"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                placeholder="e.g. 10.5"
+                className="field-input"
+                aria-invalid={errorMessage ? "true" : undefined}
+                aria-describedby={errorMessage ? errorId : undefined}
+                required
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="years"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Loan term (years)
+            <div className="field-group">
+              <label htmlFor="years" className="field-label">
+                Loan Term (Years)
               </label>
               <input
                 id="years"
-                className="border rounded p-2 w-full"
                 name="years"
-                onChange={(e) => setYears(+e.target.value)}
-                placeholder="Years"
                 type="number"
+                inputMode="decimal"
+                min="0.1"
+                step="any"
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                placeholder="e.g. 5"
+                className="field-input"
+                aria-invalid={errorMessage ? "true" : undefined}
+                aria-describedby={errorMessage ? errorId : undefined}
+                required
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="customInstallment"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Custom monthly EMI (optional)
+            <div className="field-group">
+              <label htmlFor="customInstallment" className="field-label">
+                Custom Monthly EMI (Optional)
               </label>
               <input
                 id="customInstallment"
-                className="border rounded p-2 w-full"
                 name="customInstallment"
-                onChange={(e) =>
-                  setCustomInstallments(
-                    e.target.value === "" ? undefined : +e.target.value,
-                  )
-                }
-                placeholder="Custom monthly EMI (optional)"
                 type="number"
+                inputMode="decimal"
+                min="1"
+                step="any"
+                value={customInstallments}
+                onChange={(e) => setCustomInstallments(e.target.value)}
+                placeholder="e.g. 2500"
+                className="field-input"
+                aria-invalid={errorMessage ? "true" : undefined}
+                aria-describedby={errorMessage ? errorId : undefined}
               />
             </div>
           </div>
 
-          <div className="flex gap-2 mt-2">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
+          <div className="calc-actions">
+            <button type="submit" className="btn btn-primary">
               Generate scenario
             </button>
             <button
               type="button"
-              className="bg-gray-200 px-4 py-2 rounded"
+              className="btn btn-ghost"
               onClick={() => {
                 setScenarios([]);
+                setErrorMessage(null);
               }}
             >
-              Clear scenarios
+              Clear all
             </button>
           </div>
         </form>
+      </div>
 
-        <div className="mt-6">
-          <Accordion type="single" collapsible className="space-y-4">
+      <section aria-label="Generated loan scenarios">
+        {scenarios.length === 0 ? (
+          <div className="empty-state">
+            <h3>No scenarios generated yet</h3>
+            <p>
+              Fill in the parameters above and click &ldquo;Generate
+              scenario&rdquo; to model your repayment timeline.
+            </p>
+          </div>
+        ) : (
+          <Accordion type="single" collapsible className="scenario-list">
             {scenarios.map((s, idx) => {
               const rows = s.getArmotizationSchedule();
+              const interestPercent = (s.r * 12 * 100).toFixed(2);
+              const customNote = s.customInstallments
+                ? ` (Custom EMI: ${formatCurrency(s.customInstallments)})`
+                : "";
+              const captionId = `scenario-${idx}-caption`;
+
               return (
                 <AccordionItem
                   key={idx}
                   value={`scenario-${idx}`}
-                  className="bg-white rounded-lg shadow-sm"
+                  className="scenario-card"
                 >
-                  <AccordionTrigger className="w-full px-4 py-3">
-                    <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                      <div>
-                        <h2 className="font-medium">
-                          Scenario #{idx + 1} — Amount:{" "}
-                          {formatCurrency(s.principal)} @ {s.r * 12 * 100}%
-                        </h2>
-                        <div className="text-sm text-gray-600">
-                          Months taken: {s.months_taken} · Total interest:{" "}
-                          {formatCurrency(s.total_interest)}. Completion date:{" "}
-                          {s.getCompletionDate()}
+                  <div className="scenario-header-bar">
+                    <AccordionTrigger
+                      className="scenario-header-wrap"
+                      style={{ padding: 0 }}
+                    >
+                      <div className="scenario-info">
+                        <div className="scenario-heading">
+                          Scenario {idx + 1}: {formatCurrency(s.principal)} @ {interestPercent}%
+                          {customNote}
+                        </div>
+                        <div className="scenario-sub">
+                          Duration: <strong>{s.months_taken} months</strong> &middot; Total Interest:{" "}
+                          <strong>{formatCurrency(s.total_interest)}</strong> &middot; Debt-free date:{" "}
+                          <strong>{s.getCompletionDate()}</strong>
                         </div>
                       </div>
+                    </AccordionTrigger>
 
-                      <div className="flex items-center gap-3">
-                        <div className="text-sm text-gray-500">
-                          Expand for full schedule
-                        </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteScenario(idx);
+                      }}
+                      className="delete-action"
+                      aria-label={`Delete scenario ${idx + 1}`}
+                    >
+                      Delete
+                    </button>
+                  </div>
 
-                        <a
-                          type="button"
-                          onClick={(e) => {
-                            // prevent the click from toggling the accordion
-                            e.stopPropagation();
-                            setScenarios((prev) =>
-                              prev.filter((_, i) => i !== idx),
-                            );
-                          }}
-                          className="text-sm text-red-600 bg-red-50 px-2 py-1 rounded hover:bg-red-100"
-                          aria-label={`Delete scenario ${idx + 1}`}
-                        >
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-
-                  <AccordionContent className="px-4 pb-4 pt-2">
-                    <div className="overflow-auto">
-                      <div className="overflow-auto" style={{ maxHeight: 360 }}>
-                        <table className="min-w-full table-auto text-sm">
-                          <thead>
-                            <tr>
-                              <th className="sticky top-0 px-3 py-2 text-left bg-gray-100 z-10">
-                                Month
+                  <AccordionContent>
+                    <div
+                      tabIndex={0}
+                      role="region"
+                      aria-labelledby={captionId}
+                      className="table-scroll table-wrapper"
+                    >
+                      <table className="schedule-table">
+                        <caption id={captionId} className="visually-hidden">
+                          Amortization schedule for Scenario {idx + 1}: {formatCurrency(s.principal)} at {interestPercent}%
+                        </caption>
+                        <thead>
+                          <tr>
+                            <th scope="col" className="text-left">Month</th>
+                            <th scope="col" className="text-right">Opening Balance</th>
+                            <th scope="col" className="text-right">Monthly EMI</th>
+                            <th scope="col" className="text-right">Interest Paid</th>
+                            <th scope="col" className="text-right">Principal Paid</th>
+                            <th scope="col" className="text-right">Closing Balance</th>
+                            <th scope="col" className="text-right">Cumulative Interest</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rows.map((r) => (
+                            <tr key={r.month}>
+                              <th scope="row" className="text-left row-header">
+                                {r.month}
                               </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                Opening
-                              </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                EMI
-                              </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                Interest
-                              </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                Paid Principal
-                              </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                Closing
-                              </th>
-                              <th className="sticky top-0 px-3 py-2 text-right bg-gray-100 z-10">
-                                Total Interest
-                              </th>
+                              <td className="text-right">
+                                {formatCurrency(r.opening_balance)}
+                              </td>
+                              <td className="text-right">{formatCurrency(r.emi)}</td>
+                              <td className="text-right">
+                                {formatCurrency(r.interest)}
+                              </td>
+                              <td className="text-right">
+                                {formatCurrency(r.paidPrincipal)}
+                              </td>
+                              <td className="text-right">
+                                {formatCurrency(r.closingBalance)}
+                              </td>
+                              <td className="text-right">
+                                {formatCurrency(r.totalPaidInterest)}
+                              </td>
                             </tr>
-                          </thead>
-                          <tbody>
-                            {rows.map((r) => (
-                              <tr
-                                key={r.month}
-                                className="odd:bg-white even:bg-gray-50"
-                              >
-                                <td className="px-3 py-2">{r.month}</td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.opening_balance)}
-                                </td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.emi)}
-                                </td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.interest)}
-                                </td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.paidPrincipal)}
-                                </td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.closingBalance)}
-                                </td>
-                                <td className="px-3 py-2 text-right">
-                                  {formatCurrency(r.totalPaidInterest)}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
               );
             })}
           </Accordion>
-        </div>
-      </div>
-    </div>
+        )}
+      </section>
+    </main>
   );
 }
-
-export default App;
-// ...existing code...
