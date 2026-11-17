@@ -1,15 +1,14 @@
 "use client";
 
 import { useState, FormEvent, useId } from "react";
-import Link from "next/link";
 import { LoanAmortizationSchedule } from "@/lib/loanCalculator";
+import PageHeader from "@/components/PageHeader";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@radix-ui/react-accordion";
-import { playTactileClick } from "@/lib/sound";
 
 function formatCurrency(n: number) {
   return n.toLocaleString(undefined, {
@@ -30,7 +29,6 @@ export default function LoanCalculatorPage() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    playTactileClick();
     setErrorMessage(null);
 
     const p = parseFloat(principal);
@@ -81,7 +79,6 @@ export default function LoanCalculatorPage() {
   }
 
   function handleDeleteScenario(indexToRemove: number) {
-    playTactileClick();
     setScenarios((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   }
 
@@ -90,29 +87,14 @@ export default function LoanCalculatorPage() {
   const baseScenario = scenarios.length > 0 ? scenarios[0] : null;
 
   return (
-    <main id="main-content" tabIndex={-1} className="calc-container">
-      <div className="page-header">
-        <Link href="/" className="back-link">
-          &larr; [00] Back to Base
-        </Link>
-        <div className="hero-spec-tag">
-          <span className="spec-dot" aria-hidden="true" />
-          <span>INSTRUMENT // AMORTIZATION SIMULATOR</span>
-        </div>
-        <h1 className="page-title">Loan Repayment Scenarios</h1>
-        <p className="page-subtitle">
-          High-precision financial computing tool: model amortization
-          schedules, test custom monthly installments, and calculate interest
-          savings.
-        </p>
-      </div>
+    <main id="main-content" tabIndex={-1} className="page-layout calc-container">
+      <PageHeader
+        tag="Interactive Calculator"
+        title="Loan Amortization Simulator"
+        subtitle="High-precision financial computing tool: model repayment schedules, test custom monthly installments, and calculate interest savings over time."
+      />
 
       <div className="calc-card">
-        <div className="card-hardware-header" style={{ marginBottom: "20px", borderRadius: "6px" }}>
-          <span className="card-spec-code">SYS-CONSOLE: AMORT_SIM_ENGINE // READY</span>
-          <span className="card-status-pill">ONLINE</span>
-        </div>
-
         <form onSubmit={handleSubmit} noValidate>
           {errorMessage ? (
             <div id={errorId} className="error-banner" role="alert">
@@ -124,7 +106,7 @@ export default function LoanCalculatorPage() {
             <div className="field-group">
               <label htmlFor="principal" className="field-label">
                 <span>Principal Amount</span>
-                <span className="field-unit">[KES]</span>
+                <span className="field-unit">(KES)</span>
               </label>
               <input
                 id="principal"
@@ -146,7 +128,7 @@ export default function LoanCalculatorPage() {
             <div className="field-group">
               <label htmlFor="rate" className="field-label">
                 <span>Annual Interest Rate</span>
-                <span className="field-unit">[% PA]</span>
+                <span className="field-unit">(%)</span>
               </label>
               <input
                 id="rate"
@@ -168,7 +150,7 @@ export default function LoanCalculatorPage() {
             <div className="field-group">
               <label htmlFor="years" className="field-label">
                 <span>Loan Term</span>
-                <span className="field-unit">[YEARS]</span>
+                <span className="field-unit">(Years)</span>
               </label>
               <input
                 id="years"
@@ -190,7 +172,7 @@ export default function LoanCalculatorPage() {
             <div className="field-group">
               <label htmlFor="customInstallment" className="field-label">
                 <span>Custom Monthly EMI</span>
-                <span className="field-unit">[OPTIONAL KES]</span>
+                <span className="field-unit">(KES)</span>
               </label>
               <input
                 id="customInstallment"
@@ -211,18 +193,17 @@ export default function LoanCalculatorPage() {
 
           <div className="calc-actions">
             <button type="submit" className="btn btn-primary btn-tactile">
-              Compute Scenario &rarr;
+              Calculate Schedule &rarr;
             </button>
             <button
               type="button"
               className="btn btn-ghost btn-tactile"
               onClick={() => {
-                playTactileClick();
                 setScenarios([]);
                 setErrorMessage(null);
               }}
             >
-              Reset Memory
+              Clear All
             </button>
           </div>
         </form>
@@ -230,7 +211,7 @@ export default function LoanCalculatorPage() {
         {latestScenario ? (
           <div className="lcd-display-tray">
             <div className="lcd-display">
-              <div className="lcd-label">MONTHLY EMI [KES]</div>
+              <div className="lcd-label">Monthly EMI (KES)</div>
               <div className="lcd-value">
                 {formatCurrency(
                   latestScenario.customInstallments ||
@@ -239,19 +220,19 @@ export default function LoanCalculatorPage() {
               </div>
             </div>
             <div className="lcd-display">
-              <div className="lcd-label">TOTAL INTEREST [KES]</div>
+              <div className="lcd-label">Total Interest (KES)</div>
               <div className="lcd-value">
                 {formatCurrency(latestScenario.total_interest)}
               </div>
             </div>
             <div className="lcd-display">
-              <div className="lcd-label">REPAYMENT PERIOD</div>
+              <div className="lcd-label">Repayment Duration</div>
               <div className="lcd-value">
-                {latestScenario.months_taken} MOS
+                {latestScenario.months_taken} Months
               </div>
             </div>
             <div className="lcd-display">
-              <div className="lcd-label">COMPLETION TARGET</div>
+              <div className="lcd-label">Debt-Free Target</div>
               <div className="lcd-value" style={{ fontSize: "1.15rem" }}>
                 {latestScenario.getCompletionDate()}
               </div>
@@ -263,17 +244,17 @@ export default function LoanCalculatorPage() {
       <section aria-label="Generated loan scenarios">
         <div className="section-head">
           <div>
-            <span className="section-subhead">SIMULATION LOG</span>
+            <span className="section-subhead">Comparison</span>
             <h2>Saved Scenarios ({scenarios.length})</h2>
           </div>
         </div>
 
         {scenarios.length === 0 ? (
           <div className="empty-state">
-            <h3>No simulation telemetry logged</h3>
+            <h3>No scenarios calculated yet</h3>
             <p>
-              Adjust parameters above and click &ldquo;Compute
-              Scenario&rdquo; to simulate payoff models and interest metrics.
+              Adjust the parameters above and click &ldquo;Calculate
+              Schedule&rdquo; to simulate payoff models and interest metrics.
             </p>
           </div>
         ) : (
@@ -301,12 +282,11 @@ export default function LoanCalculatorPage() {
                   <div className="scenario-header-bar">
                     <AccordionTrigger
                       className="scenario-header-wrap"
-                      onClick={() => playTactileClick()}
                       style={{ padding: 0 }}
                     >
                       <div className="scenario-info">
                         <div className="scenario-heading">
-                          [RUN {idx + 1}] KSh {formatCurrency(s.principal)} @ {interestPercent}%
+                          Scenario {idx + 1}: KSh {formatCurrency(s.principal)} @ {interestPercent}%
                           {customNote}
                         </div>
                         <div className="scenario-sub">
@@ -321,7 +301,7 @@ export default function LoanCalculatorPage() {
                                 fontWeight: 700,
                               }}
                             >
-                              [SAVED: KSh {formatCurrency(interestDiff)}]
+                              (Saved: KSh {formatCurrency(interestDiff)})
                             </span>
                           ) : null}
                         </div>

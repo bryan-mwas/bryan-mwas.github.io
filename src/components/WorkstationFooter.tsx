@@ -11,8 +11,8 @@ export default function WorkstationFooter() {
 
   return (
     <footer className="workstation-footer">
-      <div className="footer-keys" aria-label="Keyboard navigation commands">
-        <span className="key-hint-label">TERMINAL SHORTCUTS:</span>
+      <div className="footer-keys" aria-label="Keyboard shortcuts">
+        <span className="key-hint-label">SHORTCUTS:</span>
         <span className="key-badge">
           <kbd>1</kbd> Home
         </span>
@@ -23,18 +23,18 @@ export default function WorkstationFooter() {
           <kbd>3</kbd> About
         </span>
         <span className="key-badge">
-          <kbd>4</kbd> Simulator
+          <kbd>4</kbd> Calculator
         </span>
         <span className="key-badge">
-          <kbd>H</kbd> Toggle Hi-Fi
+          <kbd>5</kbd> Contact
         </span>
         <span className="key-badge">
-          <kbd>M</kbd> Audio
+          <kbd>H</kbd> Theme
         </span>
       </div>
       <div className="footer-copy">
-        <span>&copy; {year} BRIAN MWATHI // ALL RIGHTS RESERVED</span>
-        <span>ENGINEERED WITH NEXT.JS &amp; WEB AUDIO</span>
+        <span>&copy; {year} Brian Mwathi · All Rights Reserved</span>
+        <span>Built with Next.js &amp; TypeScript</span>
       </div>
     </footer>
   );

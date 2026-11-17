@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { playTactileClick, toggleTheme, toggleSound } from "@/lib/sound";
+import { toggleTheme } from "@/lib/theme";
 
 export default function KeyboardNav() {
   const router = useRouter();
@@ -24,23 +24,17 @@ export default function KeyboardNav() {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (e.key === "1") {
-        playTactileClick();
         router.push("/");
       } else if (e.key === "2") {
-        playTactileClick();
         router.push("/portfolio");
       } else if (e.key === "3") {
-        playTactileClick();
         router.push("/about");
       } else if (e.key === "4") {
-        playTactileClick();
         router.push("/loan-calculator");
+      } else if (e.key === "5") {
+        router.push("/contact");
       } else if (e.key === "h" || e.key === "H") {
-        playTactileClick();
         toggleTheme();
-      } else if (e.key === "m" || e.key === "M") {
-        const next = toggleSound();
-        if (next) playTactileClick();
       }
     };
 

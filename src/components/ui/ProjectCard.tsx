@@ -1,36 +1,18 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/projects";
-import { playTactileClick } from "@/lib/sound";
 
 export default function ProjectCard({
   project,
-  index,
 }: {
   project: Project;
   index?: number;
 }) {
-  const indexStr = index !== undefined ? String(index + 1).padStart(2, "0") : "01";
-  const sysCode = `SYS-${project.slug.toUpperCase().slice(0, 7)}`;
-
   return (
     <Link
       href={`/portfolio/${project.slug}`}
       className="card card-tactile"
-      onClick={() => playTactileClick()}
     >
-      <div className="card-hardware-header">
-        <span className="card-spec-code">
-          [{indexStr}] {sysCode}
-        </span>
-        <span className="card-status-pill">
-          <span className="pill-dot" aria-hidden="true" />
-          <span>PROD</span>
-        </span>
-      </div>
-
       {project.image ? (
         <div className="card-image-wrap">
           <Image

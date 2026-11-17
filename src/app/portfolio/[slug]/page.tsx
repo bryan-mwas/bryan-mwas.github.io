@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { getProject, getProjects } from "@/lib/projects";
 import { remark } from "remark";
 import html from "remark-html";
+import BackLink from "@/components/BackLink";
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -23,12 +24,12 @@ export async function generateMetadata({
 
   if (!project) {
     return {
-      title: "System Not Found | Brian Mwathi",
+      title: "Project Not Found | Brian Mwathi",
     };
   }
 
   return {
-    title: `${project.title} | Technical Dossier | Brian Mwathi`,
+    title: `${project.title} | Brian Mwathi`,
     description: project.summary,
   };
 }
@@ -48,25 +49,14 @@ export default async function ProjectDetailPage({
   const processed = await remark().use(html).process(project.body);
   const contentHtml = processed.toString();
   const isInternalUrl = project.url?.startsWith("/");
-  const sysCode = `SYS-${project.slug.toUpperCase().slice(0, 7)}`;
 
   return (
-    <main id="main-content" tabIndex={-1} className="project-detail-layout">
-      <div className="page-header" style={{ paddingBottom: "18px" }}>
-        <Link href="/portfolio" className="back-link">
-          &larr; [01] Back to Portfolio Catalog
-        </Link>
-      </div>
+    <main id="main-content" tabIndex={-1} className="page-layout project-detail-layout">
+      <header className="page-header" style={{ paddingBottom: "12px" }}>
+        <BackLink href="/portfolio" label="Back to Portfolio" />
+      </header>
 
       <div className="project-hero">
-        <div className="card-hardware-header" style={{ marginBottom: "20px", borderRadius: "6px" }}>
-          <span className="card-spec-code">DOSSIER // {sysCode}</span>
-          <span className="card-status-pill">
-            <span className="pill-dot" aria-hidden="true" />
-            <span>DEPLOYED</span>
-          </span>
-        </div>
-
         <div className="project-detail-head">
           <div>
             <span className="project-category-badge">{project.category}</span>
@@ -127,8 +117,8 @@ export default async function ProjectDetailPage({
                 <span className="bezel-dot dot-amber" aria-hidden="true" />
                 <span className="bezel-dot dot-green" aria-hidden="true" />
               </div>
-              <span>SCREEN // INTERFACE PREVIEW [1080p]</span>
-              <span>LIVE FEED</span>
+              <span>Preview</span>
+              <span>Live Application</span>
             </div>
             <Image
               src={project.image}
@@ -144,11 +134,6 @@ export default async function ProjectDetailPage({
       </div>
 
       <article className="case-study-body">
-        <div className="card-hardware-header" style={{ marginBottom: "24px", borderRadius: "6px" }}>
-          <span className="card-spec-code">ARCHITECTURE &amp; IMPLEMENTATION SPEC</span>
-          <span className="card-status-pill">DOCUMENTATION</span>
-        </div>
-
         <div
           className="prose"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
@@ -167,14 +152,11 @@ export default async function ProjectDetailPage({
           }}
         >
           <Link href="/portfolio" className="btn btn-ghost btn-tactile">
-            &larr; Back to Catalog
+            &larr; Back to all projects
           </Link>
-          <a
-            href="mailto:mwathibrian7@gmail.com"
-            className="btn btn-primary btn-tactile"
-          >
-            Inquire About This Architecture &rarr;
-          </a>
+          <Link href="/contact" className="btn btn-primary btn-tactile">
+            Discuss this project &rarr;
+          </Link>
         </div>
       </article>
     </main>

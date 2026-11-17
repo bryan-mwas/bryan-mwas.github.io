@@ -12,10 +12,10 @@ export default async function Home() {
         <div>
           <div className="hero-spec-tag">
             <span className="spec-dot" aria-hidden="true" />
-            <span>SYS-SPEC: FULL-STACK ENGINEER // CLOUD ARCHITECT</span>
+            <span>Full-Stack Engineer &amp; Cloud Architect</span>
           </div>
           <h1>
-            Hello, I&rsquo;m <span>Mwathi.</span>
+            Hello, I&rsquo;m <span>Brian.</span>
           </h1>
           <p>
             A full-stack engineer with six years of experience building
@@ -26,12 +26,9 @@ export default async function Home() {
             <Link className="btn btn-primary btn-tactile" href="/portfolio">
               Explore work &rarr;
             </Link>
-            <a
-              className="btn btn-ghost btn-tactile"
-              href="mailto:mwathibrian7@gmail.com"
-            >
-              Say hello
-            </a>
+            <Link className="btn btn-ghost btn-tactile" href="/contact">
+              Say hello &rarr;
+            </Link>
           </div>
         </div>
 
@@ -47,25 +44,20 @@ export default async function Home() {
             />
           </div>
           <div className="photo-spec-caption">
-            <span>FIGURE 01: MWATHI, B.</span>
-            <span>NBO // 2026</span>
+            <span>Brian Mwathi</span>
+            <span>Nairobi, Kenya</span>
           </div>
         </div>
       </section>
 
-      <section
-        aria-label="Selected engineering projects"
-        className="projects-section"
-      >
+      <section aria-label="Selected engineering projects" className="projects-section">
         <div className="section-head">
           <div>
-            <span className="section-subhead">
-              INDEX // SELECTED DEPLOYMENTS
-            </span>
+            <span className="section-subhead">Selected Work</span>
             <h2>Featured Projects</h2>
           </div>
           <Link href="/portfolio" className="section-link">
-            Full Index [01-03] &rarr;
+            View all projects &rarr;
           </Link>
         </div>
 

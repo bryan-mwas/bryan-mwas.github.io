@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PageHeader from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "About | Brian Mwathi",
@@ -9,93 +10,59 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main id="main-content" tabIndex={-1}>
-      <div className="page-header">
-        <Link href="/" className="back-link">
-          &larr; [00] Back to Base
-        </Link>
-        <div className="hero-spec-tag">
-          <span className="spec-dot" aria-hidden="true" />
-          <span>DOSSIER // SPECIFICATION ID: BM-2026</span>
+    <main id="main-content" tabIndex={-1} className="page-layout">
+      <PageHeader
+        tag="Engineering Profile"
+        title="Background &amp; Expertise"
+        subtitle="Six years of designing and operating cloud infrastructure on AWS and Azure, and building high-trust applications tailored for African digital economies."
+      />
+
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-num">6+</div>
+          <div className="stat-label">Years of Experience</div>
+          <p className="stat-desc">
+            Production full-stack engineering and cloud-native architecture.
+          </p>
         </div>
-        <h1 className="page-title">About &amp; Background</h1>
-        <p className="page-subtitle">
-          Full-stack software engineer based in Nairobi, Kenya, architecting
-          distributed cloud systems and high-reliability financial tooling.
-        </p>
+
+        <div className="stat-card">
+          <div className="stat-num">8</div>
+          <div className="stat-label">Countries Deployed</div>
+          <p className="stat-desc">
+            Fintech tools and distributed systems serving users across Africa.
+          </p>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-num">2</div>
+          <div className="stat-label">Cloud Ecosystems</div>
+          <p className="stat-desc">
+            Hands-on production proficiency across both AWS and Microsoft Azure.
+          </p>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-num">99.9%</div>
+          <div className="stat-label">Reliability Focus</div>
+          <p className="stat-desc">
+            Architecting fault-tolerant APIs, serverless backends, and databases.
+          </p>
+        </div>
       </div>
-
-      <section className="stats-grid" aria-label="System statistics">
-        <div className="stat-card">
-          <span className="stat-index">[SPEC-01]</span>
-          <span className="stat-num">6+</span>
-          <span className="stat-label">Years Field Experience</span>
-          <p className="stat-desc">
-            Designing resilient microservices and distributed workloads on AWS
-            &amp; Azure.
-          </p>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-index">[SPEC-02]</span>
-          <span className="stat-num">8</span>
-          <span className="stat-label">African Territories</span>
-          <p className="stat-desc">
-            Deploying applications serving millions across diverse African
-            digital economies.
-          </p>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-index">[SPEC-03]</span>
-          <span className="stat-num">MSc</span>
-          <span className="stat-label">IT &amp; Machine Learning</span>
-          <p className="stat-desc">
-            Advanced degree fusing distributed architectures with data science
-            and ML models.
-          </p>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-index">[SPEC-04]</span>
-          <span className="stat-num">FinTech</span>
-          <span className="stat-label">Core Payments</span>
-          <p className="stat-desc">
-            Client-side statement decryption, automated billing pipelines, and
-            debt simulators.
-          </p>
-        </div>
-      </section>
 
       <div className="about-columns">
         <article className="bio-card">
-          <div className="card-hardware-header">
-            <span className="card-spec-code">LOG // 01: ENGINEERING NARRATIVE</span>
-            <span className="card-status-pill">VERIFIED</span>
-          </div>
-
-          <h2>Background &amp; Philosophy</h2>
+          <h2>Engineering Philosophy</h2>
           <p>
-            Hello! I&apos;m Brian, a software engineer based in Nairobi, Kenya. My
-            approach to software engineering is rooted in first-principles
-            problem solving and building systems that perform flawlessly under
-            real-world constraints.
-          </p>
-          <p>
-            With an MSc in Information Technology focused on applied Machine
-            Learning and an undergraduate foundation in Informatics, I combine
-            rigorous technical execution with pragmatic architecture. Over the
-            past six years, I have engineered cloud-native distributed platforms
-            running on AWS and Azure that power transactions across eight
-            African countries.
+            I am a full-stack software engineer and cloud architect based in
+            Nairobi, Kenya. Over the past six years, I have architected, scaled,
+            and maintained distributed cloud infrastructure on Amazon Web
+            Services and Microsoft Azure, spanning serverless compute, event-driven
+            microservices, and automated CI/CD deployment pipelines.
           </p>
 
-          <div className="card-hardware-header" style={{ marginTop: "32px" }}>
-            <span className="card-spec-code">LOG // 02: INFRASTRUCTURE &amp; FINTECH</span>
-            <span className="card-status-pill">ACTIVE</span>
-          </div>
-
-          <h2>Building for African Scale</h2>
+          <h2>Fintech &amp; Local Context</h2>
           <p>
             Building for Africa demands deep empathy for infrastructure
             discrepancies, mobile-first environments, and distinct payment
@@ -104,11 +71,6 @@ export default function AboutPage() {
             invoice PDFs, or building amortization simulators, I build software
             that respects user data, loads instantaneously, and stays reliable.
           </p>
-
-          <div className="card-hardware-header" style={{ marginTop: "32px" }}>
-            <span className="card-spec-code">LOG // 03: MENTORSHIP &amp; STANDARDS</span>
-            <span className="card-status-pill">CONTINUOUS</span>
-          </div>
 
           <h2>Mentorship &amp; Craft</h2>
           <p>
@@ -122,24 +84,18 @@ export default function AboutPage() {
             <Link className="btn btn-primary btn-tactile" href="/portfolio">
               Inspect Portfolio &rarr;
             </Link>
-            <a
-              className="btn btn-ghost btn-tactile"
-              href="mailto:mwathibrian7@gmail.com"
-            >
-              Contact Brian
-            </a>
+            <Link className="btn btn-ghost btn-tactile" href="/contact">
+              Get in Touch &rarr;
+            </Link>
           </div>
         </article>
 
         <aside>
           <div className="sidebar-box">
-            <div className="card-hardware-header">
-              <span className="card-spec-code">SPEC // TOOLKIT</span>
-              <span className="card-status-pill">V.2026</span>
-            </div>
+            <h3 style={{ fontSize: "1.1rem", marginBottom: "16px" }}>Technical Toolkit</h3>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">[01] CLOUD &amp; DEVOPS</div>
+              <div className="toolkit-title">Cloud &amp; DevOps</div>
               <ul className="tags">
                 <li>AWS Lambda</li>
                 <li>AWS ECS / RDS</li>
@@ -150,7 +106,7 @@ export default function AboutPage() {
             </div>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">[02] LANGUAGES &amp; WEB</div>
+              <div className="toolkit-title">Languages &amp; Web</div>
               <ul className="tags">
                 <li>TypeScript</li>
                 <li>Next.js / React</li>
@@ -161,7 +117,7 @@ export default function AboutPage() {
             </div>
 
             <div className="toolkit-item">
-              <div className="toolkit-title">[03] DATA &amp; ARCHITECTURE</div>
+              <div className="toolkit-title">Data &amp; Architecture</div>
               <ul className="tags">
                 <li>PostgreSQL</li>
                 <li>Redis</li>
@@ -173,21 +129,18 @@ export default function AboutPage() {
           </div>
 
           <div className="sidebar-box">
-            <div className="card-hardware-header">
-              <span className="card-spec-code">STATUS // TELEMETRY</span>
-              <span className="card-status-pill">OPEN</span>
-            </div>
-            <p style={{ margin: "14px 0 16px", fontSize: "0.95rem" }}>
+            <h3 style={{ fontSize: "1.1rem", marginBottom: "12px" }}>Availability</h3>
+            <p style={{ margin: "0 0 16px", fontSize: "0.95rem", color: "var(--ink-muted)" }}>
               Currently open for selected architectural consultations, contract
               engineering, and technical discussions.
             </p>
-            <a
+            <Link
               className="btn btn-primary btn-tactile btn-sm"
-              style={{ width: "100%" }}
-              href="mailto:mwathibrian7@gmail.com"
+              style={{ width: "100%", justifyContent: "center" }}
+              href="/contact"
             >
-              mwathibrian7@gmail.com
-            </a>
+              Contact Brian &rarr;
+            </Link>
           </div>
         </aside>
       </div>
