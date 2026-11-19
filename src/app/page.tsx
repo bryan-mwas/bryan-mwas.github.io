@@ -15,7 +15,7 @@ export default async function Home() {
             <span>Full-Stack Engineer &amp; Cloud Architect</span>
           </div>
           <h1>
-            Hello, I&rsquo;m <span>Brian.</span>
+            Hello, I&rsquo;m <span>Mwathi.</span>
           </h1>
           <p>
             A full-stack engineer with six years of experience building
@@ -50,7 +50,10 @@ export default async function Home() {
         </div>
       </section>
 
-      <section aria-label="Selected engineering projects" className="projects-section">
+      <section
+        aria-label="Selected engineering projects"
+        className="projects-section"
+      >
         <div className="section-head">
           <div>
             <span className="section-subhead">Selected Work</span>
